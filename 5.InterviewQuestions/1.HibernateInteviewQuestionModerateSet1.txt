@@ -19,7 +19,9 @@
 
 ##	Difference between get() vs load() method in Hibernate?
 
--	The key difference between the get() and load() method is that load() will throw an exception if an object with id passed to them is not found, but get() will return null
+-	The key difference between the get() and load() method is that:
+	-	load() will throw an exception if an object with id passed to them is not found
+	-	but get() will return null
 -	Another important difference is that load can return proxy without hitting the database unless required (when you access any attribute other than id) but get() always go to the database, so sometimes using load() can be faster than the get() method
 
 
@@ -35,6 +37,143 @@
 
 
 
+##	What are some strategies to solve the N+1 SELECT problem in Hibernate?
+
+-	Some strategies to solve the N+1 problem:
+	-	1) pre-fetching in batches, this will reduce the N+1 problem to N/K + 1 problem where  K is the size of the batch
+	-	2) subselect fetching strategy
+	-	3) disabling lazy loading
+	
+	
+##	What is the difference between save() and persist() method in Hibernate?
+![](https://4.bp.blogspot.com/-0FvMOmnE7ec/Vrm6gpn-yvI/AAAAAAAAEvA/fb9ZfeJL9Uw/s640/Difference%2Bbetween%2Bsave%2Bvs%2Bpersist%2Bin%2BHibernate.png)
+-	The main difference between save() and persist() method is that:
+
+	-	save returns a Serializable object while return type of the persist() method is void, so it doesn't return anything
+
+##	 What is the requirement for a Java object to become a Hibernate entity object?
+
+-	It should not be final and must provide a default, no-argument constructor, better to override hashcode and equals method
+
+
+##	What are different types of caches available in Hibernate?
+
+-	First level cache or session cache -> enabled by default
+-	Second level cache - not enabled by default -> needs to enable manually:
+-	Second level cache will be maintained by Session Factory instance
+
+	-	Hibernate by default ships with EHcache
+	-	hibernate.use_second_level_cache is the property to enable the second level cache
+	
+##	What is the difference between the first and second level cache in Hibernate?
+
+
+-	The first level cache is maintained at Session level while the second level cache is maintained at a SessionFactory level and shared by all sessions
+
+
+##	Does Hibernate Session interface thread-safe in Java?
+
+-	No, Session object is not thread-safe in Hibernate and intended to be used with-in single thread in the application
+
+
+##	 Does SessionFactory thread-safe in Hibernate?
+
+-	SessionFactory is both Immutable and thread-safe and only one instance will be created for entire Hibernate application
+-	It is used to create a Session object and it also provides caching by storing SQL queries stored by multiple session
+
+
+##	What is different between Session and SessionFactory in Hibernate?
+
+
+-	The main difference between Session and SessionFactory is that the Session Instance is a single-threaded, short-lived object
+-	While SessionFactory Instance is Immutable and shared by all Session.
+-	SessionFactory also lives until the Hibernate is running.
+-	Another difference between Session and SessionFactory is that Session provides first level cache while SessionFactory provides the Second level cache which will shared by all the sessions.
+
+
+##	What is criterion query in hibernate?
+
+
+-	Criteria is a API for retrieving entities by composing Criterion objects also known as Criterion query
+-	This is a very convenient approach for functionality like "search", filter, restrictions, order by, joins etc, group
+-	Main advantage of Criteria Query is that, we will get compile time errors 
+
+
+				List books = session.createCriteria(Book.class)
+				.add(Restrictions.like("name", "java%") )
+				.add(Restrictions.like("published_year", "2015"))
+				.addOrder(Order.asc("name") )
+				.list();
+
+
+				
+##	What are other ORM frameworks? Any alternative of Hibernate?
+
+-	toplink, eclipse link etc
+
+
+##	What is the difference between save() and saveOrUpdate() method of Hibernate?
+
+
+-	Though both save() and saveOrUpdate() method is used to store an object into Database
+- 	the key difference between them is that save can only INSERT records but saveOrUpdate() can either INSERT or UPDATE records
+
+
+##	 What is difference between getCurrentSession() and openSession() in Hibernate? 
+
+-	getCurrentSession() will use the currently running session if any other a new session will be created to commit the transactions
+-	openSession() will create new session irrespective of current session 
+
+
+##	What is Hibernate Query Language (HQL)?
+
+-	Hibernate query language, HQL is an object-oriented equivalent to SQL
+-	HQL operates on the entities and its properties instead of tables and columns
+-	It allows us to query, store, update, and retrieve objects from a database without using SQL
+-	Hibernate will convert the HQL to SQL at runtime
+
+
+##	When do you use merge() and update() in Hibernate?
+
+- 	We should use update(entity) method if we are sure that entity is not in persistent state in any of the session
+	-	
+-	Use merge() if you want to merge your modifications at any time without considering the state of the session
+
+
+##	The difference between sorted and ordered collection in Hibernate?
+
+
+-	The main difference between sorted and ordered collection is that:
+	-	Sorted collection sort the data in JVM's heap memory using Java's collection framework sorting methods
+	-	While the ordered collection is sorted using order by clause in the database itself
+	
+
+##	How do you log SQL queries issued by the Hibernate framework in Java application?
+
+-	We can use the show_sql property to log SQL queries issued by the Hibernate framework
+-	In hibernate.cfg.xml file
+	
+			<property name=”hibernate.show_sql”> true </property>
+
+
+			
+##	What are the three states of a Hibernate Persistence object can be?
+
+-	Transient
+-	Persistent
+-	Detached 
+-	Removed
+
+
+##	What is the difference between the transient, persistent and detached state in Hibernate? 
+
+
+-	https://github.com/iambharath-ashok/Hibernate/blob/master/1.HibernateCore/1.HibernateArchitecture/2.HibernateEntityLifeCycleStates.md 
+
+
+##	Which cache is used by Session Object in Hibernate? First level or second level cache?
+
+- 	A Session object uses the first-level cache
 
 
 
