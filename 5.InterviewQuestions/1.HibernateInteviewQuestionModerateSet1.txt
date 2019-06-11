@@ -1,0 +1,64 @@
+# Hibernate Interview Questions
+
+##	What is Hibernate?
+
+-	Hibernate is a ORM tool, that maps java objects to DB tables
+-	Hibernates takes care doing db related operations like generating queries, managing cache, connection pooling
+-	Developers can focus more on business logic 
+
+
+##	What are the advantages of Hibernate over JDBC
+
+
+-	Reduces lot of boiler plate code
+-	Caching
+-	Lazyloading
+-	Relationship management and provides code for mapping an object to the data
+-	The developer is free from writing code to load/store data into the database
+
+
+##	Difference between get() vs load() method in Hibernate?
+
+-	The key difference between the get() and load() method is that load() will throw an exception if an object with id passed to them is not found, but get() will return null
+-	Another important difference is that load can return proxy without hitting the database unless required (when you access any attribute other than id) but get() always go to the database, so sometimes using load() can be faster than the get() method
+
+
+##	 What is N+1 SELECT problem in Hibernate?
+
+-	N+1 problem is hibernate is due to lazy fetch or on demand fetching strategy
+-	Hibernate will end up executing N+1 queries to populate a collection of N elements
+
+- 	For ex: If there are list of N items and each item depends on Collection of Bid Objects 
+	-	In order find the highest bid for each item hibernate will fire 1 query to load all the items 
+	- 	And N subsequent queries to load highest bid for each item
+-	So in order to find the highest bid for each item your application ends up firing N+1 queries
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
